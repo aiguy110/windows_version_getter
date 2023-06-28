@@ -5,9 +5,13 @@ use windows::Win32::System::SystemInformation::{
     SYSTEM_INFO
 };
 
+use std::mem::size_of;
+
 fn main() {
     // Get OS Version Info
     let mut ver_info: OSVERSIONINFOA = Default::default();
+    ver_info.dwOSVersionInfoSize = size_of::<OSVERSIONINFOA>() as u32;
+
     let ver_info_ptr = (&mut ver_info) as *mut OSVERSIONINFOA;
     
     let success = unsafe { GetVersionExA(ver_info_ptr).as_bool() };
